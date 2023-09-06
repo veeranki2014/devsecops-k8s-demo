@@ -26,9 +26,8 @@ pipeline{
         stage('Docker Build and Push') {
           steps {
             sh 'printenv'
-            sh 'sudo docker build -t veeranki2014/numeric-app:""$GIT_COMMIT"" .'
-            sh 'docker push veeranki2014/numeric-app:""$GIT_COMMIT""'
+            sh 'sudo docker build -t veeranki2014/numeric-app:$GIT_COMMIT .'
+            sh 'sudo docker push veeranki2014/numeric-app:""$GIT_COMMIT'
           }
         }
       }
-}
