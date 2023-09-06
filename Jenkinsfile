@@ -18,16 +18,17 @@ pipeline{
              always {
                junit 'target/surefire-reports/*.xml'
                jacoco execPattern: 'target/jacoco.exec'
-               //      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-               //      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-               //      publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'owasp-zap-report', reportFiles: 'zap_report.html', reportName: 'OWASP ZAP HTML Report', reportTitles: 'OWASP ZAP HTML Report'])
-
-           		  // //Use sendNotifications.groovy from shared library and provide current build result as parameter
-               //      //sendNotification currentBuild.result
              }
            }
-
         }
 
+        //Docker image build & Push
+        stage('Docker Build and Push') {
+          steps {
+            sh 'printenv'
+            sh 'sudo docker build -t veeranki2014/numeric-app:""$GIT_COMMIT"" .'
+            sh 'docker push veeranki2014/numeric-app:""$GIT_COMMIT""'
+          }
+        }
       }
 }
