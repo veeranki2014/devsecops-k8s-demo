@@ -34,12 +34,14 @@ pipeline{
           }
         }
 
+        //Kubernetes Deployment
         stage('K8S Deployment - DEV') {
-         steps {
-           withKubeConfig([credentialsId: 'kubeconfig']) {
-           sh "bash k8s-deployment.sh"
+          steps {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+            sh "bash k8s-deployment.sh"
             }
-         }
+          }
+        }
 
       }
  }
