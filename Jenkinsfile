@@ -28,7 +28,7 @@ pipeline{
             sh 'printenv'
             sh 'sudo docker build -t veeranki2014/numeric-app:""$GIT_COMMIT"" .'
             sh 'docker push veeranki2014/numeric-app:""$GIT_COMMIT""'
-            //
+
           }
         }
       }
