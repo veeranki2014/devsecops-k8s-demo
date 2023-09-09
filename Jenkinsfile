@@ -52,7 +52,7 @@ pipeline{
             withKubeConfig([credentialsId: 'kubeconfig']) {
             sh "sed -i 's#replace#veeranki2014/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
             sh "kubectl -n default apply -f k8s_deployment_service.yaml"
-            //sh "sudo bash k8s-deployment.sh"//
+            //sh "sudo bash k8s-deployment.sh"
             }
           }
         }
