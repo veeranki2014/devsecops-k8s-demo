@@ -99,16 +99,33 @@ pipeline{
             }
 
         //Kubernetes Deployment
-        stage('K8S Deployment - DEV') {
-          steps {
+//         stage('K8S Deployment - DEV') {
+//           steps {
+//             withKubeConfig([credentialsId: 'kubeconfig']) {
+//             sh "sed -i 's#replace#veeranki2014/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+//             sh "kubectl -n default apply -f k8s_deployment_service.yaml"
+//             //sh "sudo bash k8s-deployment.sh"
+//             //
+//             }
+//           }
+//         }
+
+ //    stage('K8S Deployment - DEV') {
+      steps {
+        parallel(
+          "Deployment": {
             withKubeConfig([credentialsId: 'kubeconfig']) {
-            sh "sed -i 's#replace#veeranki2014/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
-            sh "kubectl -n default apply -f k8s_deployment_service.yaml"
-            //sh "sudo bash k8s-deployment.sh"
-            //
+              sh "bash k8s-deployment.sh"
+            }
+          },
+          "Rollout Status": {
+            withKubeConfig([credentialsId: 'kubeconfig']) {
+              sh "bash k8s-deployment-rollout-status.sh"
             }
           }
-        }
+        )
+      }
+    }
 
       }
  }
